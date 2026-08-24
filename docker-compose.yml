@@ -1,0 +1,30 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: devops-ai-backend
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      APP_NAME: "DevOps AI Assistant"
+      APP_VERSION: "1.0.0"
+      KUBERNETES_NAMESPACE: "default"
+
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: devops-ai-frontend
+
+    ports:
+      - "5173:5173"
+
+    depends_on:
+      - backend
