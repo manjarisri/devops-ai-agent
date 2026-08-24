@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: demo-app
+
+  labels:
+    app: demo-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: demo-app
+
+  template:
+
+    metadata:
+      labels:
+        app: demo-app
+
+    spec:
+
+      containers:
+
+        - name: demo-app
+
+          image: python:3.12-alpine
+
+          command:
+            - /bin/sh
+            - -c
+
+          args:
+            - |
+              echo "================================"
+              echo "DevOps Demo Application Starting"
+              echo "================================"
+              echo "Connecting to database..."
+              python -c "import socket; socket.create_connection(('non-existent-db', 5432), 5)"
+              echo "Application started successfully"
+
+          ports:
+            - containerPort: 8080
+
+          resources:
+
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+
+            limits:
+              cpu: "200m"
+              memory: "128Mi"

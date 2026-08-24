@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-ai-frontend
+  namespace: devops-ai
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: devops-ai-frontend
+
+  template:
+    metadata:
+      labels:
+        app: devops-ai-frontend
+
+    spec:
+
+      containers:
+        - name: frontend
+
+          image: devops-ai-frontend:latest
+
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 5173
+
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
